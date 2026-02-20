@@ -1,0 +1,23 @@
+const mongoose = require("mongoose");
+
+const questionSchema = new mongoose.Schema({
+  category: {
+    type: String,
+    required: true
+  },
+  track: {
+    type: String,
+    enum: ["upskill", "career"],
+    default: null
+  },
+  question: {
+    type: String,
+    required: true
+  },
+  options: {
+    type: [String],
+    required: true
+  }
+});
+
+module.exports = mongoose.model("Question", questionSchema);
