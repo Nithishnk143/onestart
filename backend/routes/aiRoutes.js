@@ -67,9 +67,24 @@ Return ONLY valid JSON in EXACT format:
 
 {
   "recommendations": [
-    { "title": "", "description": "" },
-    { "title": "", "description": "" },
-    { "title": "", "description": "" }
+    { 
+      "title": "Job Title", 
+      "description": "Short description of the career",
+      "explanation": "Detailed explanation of why this fits the user based on their skills and category",
+      "courses": ["Specific Course Name 1", "Specific Course Name 2", "Specific Course Name 3"]
+    },
+    { 
+      "title": "Job Title", 
+      "description": "Short description of the career",
+      "explanation": "Detailed explanation of why this fits the user based on their skills and category",
+      "courses": ["Specific Course Name 1", "Specific Course Name 2", "Specific Course Name 3"]
+    },
+    { 
+      "title": "Job Title", 
+      "description": "Short description of the career",
+      "explanation": "Detailed explanation of why this fits the user based on their skills and category",
+      "courses": ["Specific Course Name 1", "Specific Course Name 2", "Specific Course Name 3"]
+    }
   ]
 }
 
@@ -77,13 +92,14 @@ STRICT RULES:
 - EXACTLY 3 recommendations
 - ONLY JSON
 - No markdown
-- No explanation
+- No conversational text
+- The keys MUST be "title", "description", "explanation", and "courses"
 `;
 
     const response = await axios.post(
-      "http://localhost:11434/api/generate",
+      "https://trimester-imagines-poplar.ngrok-free.dev/api/generate",
       {
-        model: "llama3",   // ⭐ BEST MODEL
+        model: "llama3.1:8b",   // ⭐ BEST MODEL
         prompt,
         stream: false
       },
@@ -166,9 +182,9 @@ FORMAT:
 `;
 
     const response = await axios.post(
-      "http://localhost:11434/api/generate",
+      "https://trimester-imagines-poplar.ngrok-free.dev/api/generate",
       {
-        model: "llama3",
+        model: "llama3.1:8b",
         prompt,
         stream: false
       }

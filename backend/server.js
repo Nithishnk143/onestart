@@ -6,6 +6,9 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cors({
+  origin: "https://onestart.onrender.com"
+}));
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
@@ -16,8 +19,6 @@ app.use("/api/scholarships", require("./routes/scholarshipRoutes"));
 app.use("/api/ai", require("./routes/aiRoutes"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/test", require("./routes/testRoutes"));
-app.use("/api/scholarships", require("./routes/scholarshipRoutes"));
-app.use("/api/auth", require("./routes/authRoutes"));
 
 
 

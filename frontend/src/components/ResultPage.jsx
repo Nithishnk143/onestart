@@ -114,9 +114,37 @@ function ResultPage() {
       doc.setFontSize(12);
       doc.text(`${i + 1}. ${r.title}`, 20, y);
       y += 8;
+
       doc.setFontSize(10);
-      doc.text(r.description, 22, y);
-      y += 12;
+      const descLines = doc.splitTextToSize(r.description, 170);
+      doc.text(descLines, 22, y);
+      y += (descLines.length * 6) + 4;
+
+      if (r.explanation) {
+        doc.setFontSize(9);
+        const explLines = doc.splitTextToSize(`Why this fits: ${r.explanation}`, 170);
+        doc.text(explLines, 22, y);
+        y += (explLines.length * 5) + 4;
+      }
+
+      if (r.courses && r.courses.length > 0) {
+        doc.setFontSize(9);
+        doc.text("Recommended Courses:", 22, y);
+        y += 5;
+        r.courses.forEach(c => {
+          const courseLines = doc.splitTextToSize(`- ${c}`, 166);
+          doc.text(courseLines, 26, y);
+          y += (courseLines.length * 5);
+        });
+        y += 2;
+      }
+
+      y += 6;
+
+      if (y > 270) {
+        doc.addPage();
+        y = 20;
+      }
     });
 
     doc.save("career_result.pdf");
@@ -185,6 +213,27 @@ function ResultPage() {
                     ></i>
                     <h5 className="mt-3 rec-title-bold">{rec.title}</h5>
                     <p>{rec.description}</p>
+
+                    {rec.explanation && (
+                      <div className="mt-3 text-start">
+                        <strong style={{ color: '#6366f1' }}>Why this fits you:</strong>
+                        <p className="small text-muted mt-1">{rec.explanation}</p>
+                      </div>
+                    )}
+
+                    {rec.courses && rec.courses.length > 0 && (
+                      <div className="mt-3 text-start">
+                        <strong style={{ color: '#22c55e' }}>Recommended Courses:</strong>
+                        <ul className="list-unstyled mt-2">
+                          {rec.courses.map((course, i) => (
+                            <li key={i} className="mb-1 small">
+                              <i className="bi bi-check-circle-fill text-success me-2"></i>
+                              {course}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -230,7 +279,7 @@ function ResultPage() {
           >
             View Scholarships
           </button>
-          
+
         </div>
       </div>
     </>
